@@ -27,7 +27,9 @@ jobs:
       run: pipenv install
 
     - name: Run Python script
-      run: pipenv run python midjourney.py
+      run: |
+        pipenv run python midjourney.py
+        cat midjourney.html
 
     - name: Commit and push HTML file
       env:
@@ -35,7 +37,7 @@ jobs:
       run: |
         git config user.name "GitHub Actions"
         git config user.email "github-actions@github.com"
-        git checkout gh-pages
+        git checkout -b gh-pages
         git add -f midjourney.html
         git commit -m "Update midjourney.html"
         git push -u origin gh-pages
