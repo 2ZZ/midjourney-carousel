@@ -13,6 +13,9 @@ jobs:
       pages: write # to deploy to Pages
       id-token: write # to verify the deployment originates from an appropriate source
       contents: read
+    environment:
+      name: github-pages
+      url: ${{ steps.deploypages.outputs.page_url }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -44,7 +47,8 @@ jobs:
           name: midjourney.html
 
       - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v1
+        id: deploypages
+        uses: actions/deploy-pages@v2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           artifact-name: midjourney.html
