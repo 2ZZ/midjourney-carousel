@@ -37,7 +37,9 @@ def get_carousel_items(json_data):
         image_paths = job.get('image_paths', [])
         if image_paths:
             items.append(
-                f'<div class="carousel-item {active}"><img class="d-block w-100" src="{image_paths[0]}"></div>')
+                f'<div class="carousel-item d-flex justify-content-center vh-100 {active}" data-bs-interval="4000">' +
+                f'<img class="d-block vh-100" src="{image_paths[0]}"/>' +
+                '</div>')
         if active:
             active = ""
     return items
