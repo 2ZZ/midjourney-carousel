@@ -30,6 +30,8 @@ jobs:
       run: |
         pipenv run python midjourney.py
         cat midjourney.html
+        ls -l midjourney.html
+        pwd
 
     - name: Upload HTML artifact
       uses: actions/upload-pages-artifact@v1
