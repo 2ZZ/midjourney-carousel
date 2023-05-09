@@ -47,5 +47,5 @@ jobs:
         uses: actions/deploy-pages@v1
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          artifact-name: html-file
+          artifact-name: midjourney.html
           target-branch: gh-pages
