@@ -1,0 +1,16 @@
+/* ImageSlider.css */
+.slider-container {
+  height: 100vh;
+}
+
+.image-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.image-container img {
+  height: 100vh;
+  object-fit: cover;
+}

@@ -6,8 +6,7 @@ import requests
 import sys
 
 url = "https://www.midjourney.com/showcase/recent/"
-template_path = 'midjourney.html.tpl'
-output_path = 'midjourney.html'
+output_path = 'public/images.json'
 
 
 def get_json_data(url):
@@ -29,46 +28,32 @@ def get_json_data(url):
         return None
 
 
-def get_carousel_items(json_data):
+def get_carousel_images(json_data):
     items = []
     jobs = json_data.get('props', {}).get('pageProps', {}).get('jobs', [])
-    active = "active"
     for job in jobs:
         image_paths = job.get('image_paths', [])
         if image_paths:
-            items.append(
-                f'<div class="carousel-item d-flex justify-content-center vh-100 {active}" data-bs-interval="4000">' +
-                f'<img class="d-block vh-100" src="{image_paths[0]}"/>' +
-                '</div>')
-        if active:
-            active = ""
+            items.append(image_paths[0])
     return items
 
 
-def generate_html(carousel_items):
-    # Read the template file
-    with open(template_path, 'r') as template_file:
-        template_html = template_file.read()
-
-    # Insert the div content into the template
-    generated_html = template_html.replace(
-        '{{ carousel_items }}', "\n".join(carousel_items))
-
-    # Write the generated HTML to the output file
-    with open(output_path, 'w') as output_file:
-        output_file.write(generated_html)
+def save_to_json(carousel_images):
+    print(f"Saving images to {output_path}")
+    with open(output_path, 'w') as f:
+        f.write(json.dumps(carousel_images, indent=2))
 
 
 def main():
     json_data = get_json_data(url)
 
     if not json_data:
-        print("No JSON data found.")
+        print("Error: No JSON data found.")
         sys.exit(1)
 
-    carousel_items = get_carousel_items(json_data)
+    carousel_images = get_carousel_images(json_data)
 
-    generate_html(carousel_items)
+    save_to_json(carousel_images)
 
 
 if __name__ == "__main__":
